@@ -246,10 +246,6 @@
              center:{lat: -6.889797, lng: -38.561197},
             });
 
-            map.addListener('click', function(e) {
-              placeMarkerAndPanTo(e.latLng, map);
-            });
-
             var dadosTratados = JSON.parse($('#idDiv').html());
             //para ver os dados e testar se deu certo use o console.log:
             

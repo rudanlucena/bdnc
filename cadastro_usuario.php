@@ -15,6 +15,10 @@
           margin-top: 20px;
          
       }
+      .invisivel{
+        display: none;
+       }
+
     </style>
 </head>      
 <body>
@@ -76,11 +80,11 @@
                           </div>
                           <div id="map"></div>
 
-                          <div class="form-group log-status">
+                          <div class="form-group log-status invisivel">
                              <input type="text" placeholder="latitude" class="form-control" name="lat" id="lat" required> 
                           </div>
 
-                          <div class="form-group log-status">
+                          <div class="form-group log-status invisivel">
                              <input type="text" placeholder="longitude" class="form-control" name="lng" id="lng" required> 
                           </div>
 
@@ -119,9 +123,6 @@
                  document.getElementById('lng').value =  event.latLng.lng()
              });
 
-            map.addListener('click', function(e) {
-              placeMarkerAndPanTo(e.latLng, map);
-            });
 
             var geocoder = new google.maps.Geocoder();
             document.getElementById('submit').addEventListener('click', function() {
