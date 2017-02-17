@@ -1,0 +1,8 @@
+1 - dar uma caprichada na estrutura e css das paginas.lembrar de não alterar nomes de campos
+2 - tentar deixar o mapa mais amplo porem lembrar da responsividade.
+3 - adicionar marcador no mapa de cadastro
+4 - testar os filtros.
+5 - na pagina de login de usuario "comum"(localhost/bdnc/index.php) vc deve colocar um link para a pagina de login de usuario adiministrador(bdnc/adm/index.php)
+6 - quando o usuario não encontra dados no filtro(resultado.php) é gerada uma resposta embaixo do mapa dizendo q não foram encontrados resultados. da um toque de css nela  
+
+atenciosamente cicm. kk 

@@ -11,8 +11,18 @@
           }
 
           $logado = $_SESSION['login'];
+
+          /* dados passados pelo metodo get */
           $id_user = $_GET['id_user'];
           $id_pergunta =$_GET['id_pergunta'];
+
+          $sim = isset($_POST['sim']);
+          $nao = isset($_POST['nao']);
+          $naoSei = isset($_POST['naoSei']);
+          $fundamental = isset($_POST['fundamental']);
+          $medio= isset($_POST['medio']);
+          $superior = isset($_POST['superior']);
+
           include("conexao.php");
     ?>
     <meta charset="UTF-8">
@@ -33,6 +43,9 @@
          
       }
       #idDiv{
+        display: none;
+      }
+      .invisivel{
         display: none;
       }
     </style>      
@@ -72,18 +85,18 @@
        <?php
           $result= $db->query("SELECT count(resposta) as totalSim from respostas_usuarios where resposta = 'sim' and id_pergunta = '$id_pergunta' ");
           $totalSim = $result->fetch_assoc();
-          echo "totalSim ".$totalSim['totalSim'];
+          
 
           $result= $db->query("SELECT count(resposta) as totalNao from respostas_usuarios where resposta = 'nao' and id_pergunta = '$id_pergunta' ");
           $totalNao = $result->fetch_assoc();
-          echo "totalNao ".$totalNao['totalNao'];
+          
 
           $result= $db->query("SELECT count(resposta) as totalNaoSei from respostas_usuarios where resposta = 'naoSei' and id_pergunta = '$id_pergunta' ");
           $totalNaoSei = $result->fetch_assoc();
-          echo "totalNaoSei ".$totalNaoSei['totalNaoSei'];
+          
 
           $somaVotos = $totalSim['totalSim'] + $totalNao['totalNao'] + $totalNaoSei['totalNaoSei'];
-          echo "soma votos ".$somaVotos;
+         
           $totalSim = (($totalSim['totalSim'] * 100) / $somaVotos);
           $totalNao = (($totalNao['totalNao'] * 100) / $somaVotos);
           $totalNaoSei = (($totalNaoSei['totalNaoSei'] * 100) / $somaVotos);
@@ -111,7 +124,7 @@
             <div class="row">
               <div class="col-md-12 col-sm-12">
 
-                  <form action="" method="post">
+                  <form action="" method="post" id="ajax_form">
                       <div class="login-form">
 
                        <div class="row resultado">
@@ -132,8 +145,15 @@
 
                        <div class="row filtros">
 
+
+
                            <div class="col-md-12 title">
                                <h3>FILTROS</h3>
+                           </div>
+
+                           <div class="invisivel">
+                               <input type="text" name="id_user" value='<?=$id_user?>' >
+                               <input type="text" name="id_pergunta" value='<?=$id_pergunta?>' >
                            </div>
 
 
@@ -145,46 +165,51 @@
                                   </div>
                               </div>
 
-                              <div class="resposta">
-                                 <label>sim<label>
-                                 <input type="checkbox" name="sim">
-                              </div>
-
-                              <div class="resposta">
-                                 <label>não<label>
-                                 <input type="checkbox" name="nao">
-                              </div>
-
-                              <div class="resposta">
-                                 <label>não sei<label>
-                                 <input type="checkbox" name="nao_sei">
-                              </div>
-                           </div><!--/.col-md-6-->
-
-
-                           <div class="col-md-6 col-sm-6">
-
-                              <div class="row">
-                                  <div class="col-md-12">
-                                     <h4>escolaridade</h4>
+                                  <div class="resposta">
+                                     <label>sim<label>
+                                     <input type="checkbox" name="sim" <?php if($sim){?>checked<?php } ?> >
                                   </div>
-                              </div>
 
-                              <div class="resposta">
-                                 <label>ensino fundamental<label>
-                                 <input type="checkbox" name="sim">
-                              </div>
+                                  <div class="resposta">
+                                     <label>não<label>
+                                     <input type="checkbox" name="nao" <?php if($nao){?>checked<?php } ?> >
+                                  </div>
 
-                              <div class="resposta">
-                                 <label>ensino medio<label>
-                                 <input type="checkbox" name="nao">
-                              </div>
+                                  <div class="resposta">
+                                     <label>não sei<label>
+                                     <input type="checkbox" name="naoSei" <?php if($naoSei){?>checked<?php } ?> >
+                                  </div>
+                               </div><!--/.col-md-6-->
 
-                              <div class="resposta">
-                                 <label>ensino superior<label>
-                                 <input type="checkbox" name="nao_sei">
-                              </div>
-                           </div><!--/.col-md-6-->
+
+                               <div class="col-md-6 col-sm-6">
+
+                                  <div class="row">
+                                      <div class="col-md-12">
+                                         <h4>escolaridade</h4>
+                                      </div>
+                                  </div>
+
+                                  <div class="resposta">
+                                     <label>ensino fundamental<label>
+                                     <input type="checkbox" name="fundamental" <?php if($fundamental){?>checked<?php } ?>>
+                                  </div>
+
+                                  <div class="resposta">
+                                     <label>ensino medio<label>
+                                     <input type="checkbox" name="medio" <?php if($medio){?>checked<?php } ?> >
+                                  </div>
+
+                                  <div class="resposta">
+                                     <label>ensino superior<label>
+                                     <input type="checkbox" name="superior" <?php if($superior){?>checked<?php } ?>>
+                                  </div>
+
+                                  <button type="submit">enviar</button>
+                               </div><!--/.col-md-6-->
+
+                               
+                         
 
 
                        </div><!--/.row-->
@@ -197,32 +222,118 @@
 
                            <div class="col-md-12 col-sm-12">
 
+                               <div id="filtro"></div>
+
                                <div id="map"></div>
 
                                <?php
-                                  $cont =0;
-                                  $usuarios = $db->query("SELECT id_usuario from respostas_usuarios where id_pergunta = '$id_pergunta' ");
-                                    while ($usuario= $usuarios->fetch_assoc()){
-                                        $id_usuario_atual = $usuario['id_usuario'];
 
+                                    /*------------------------ filtrando as respostas e pegando o id_usuario----------------------------*/
+                                    $sql = "SELECT * FROM respostas_usuarios WHERE id_pergunta = '$id_pergunta' "; /*colocar $id_pergunta*/
 
-                                          $localizacoes = $db->query("SELECT lat, lng from usuario where id = '$id_usuario_atual' ");
-                                          while ($localizacao= $localizacoes->fetch_assoc()){
-                                              $lat_atual = $localizacao['lat'];
-                                              $lng_atual = $localizacao['lng'];
-                  
-                                              $array[$cont]["lat"]= $lat_atual;
-                                              $array[$cont]["lng"]= $lng_atual;
-                                              $cont++;
-                                              
-                                          }
-                                          $localizacoes->free();                                  
-                                    
-                                        
+                                    if(($sim == null) and ($nao == null) and ($naoSei == null)){
+                                      $sql = "SELECT * FROM respostas_usuarios where id_pergunta = '$id_pergunta' ";
+                                    } 
+
+                                    else{
+                                      if($sim)
+                                        $sql = "SELECT * FROM respostas_usuarios WHERE id_pergunta = '$id_pergunta' AND resposta = 'sim' ";
+
+                                      if($sim == null){
+                                        if($nao)
+                                        $sql = "SELECT * FROM respostas_usuarios WHERE id_pergunta = '$id_pergunta' AND resposta = 'nao' ";
+                                      }
+
+                                      else{
+                                        if($nao)
+                                        $sql = "SELECT * FROM respostas_usuarios WHERE id_pergunta = '$id_pergunta' AND (resposta = 'sim' OR resposta = 'nao') ";
+                                      }
+
+                                      if(($sim == null) and ($nao == null)){
+                                        if($naoSei)
+                                        $sql = "SELECT * FROM respostas_usuarios WHERE id_pergunta = '$id_pergunta' AND resposta = 'naoSei' ";
+                                      }
+
+                                      else{
+                                        if((($sim != null) and ($nao != null)) AND ($naoSei) ){
+                                          $sql = "SELECT * FROM respostas_usuarios WHERE id_pergunta = '$id_pergunta' AND (resposta = 'sim' OR resposta = 'nao' or resposta = 'naoSei')  ";
+                                        }
+                                        else if(($sim) and ($naoSei)){
+                                          $sql = "SELECT * FROM respostas_usuarios WHERE id_pergunta = '$id_pergunta' AND (resposta = 'sim' OR resposta = 'naoSei') ";
+                                        }
+                                        else if(($nao) and ($naoSei))
+                                          $sql = "SELECT * FROM respostas_usuarios WHERE id_pergunta = '$id_pergunta' AND (resposta = 'nao'OR resposta = 'naoSei') ";
+                                      }
                                     }
-                                    $usuarios->free(); 
-                                    $dadosTratados = json_encode($array);                                 
-                               ?>
+
+
+                                  /*----------------------------------------------------filtrando por resposta-----------------------------------*/
+                                        $cont = 0;
+                                        $respostas = $db->query($sql);
+                                        while ($resposta= $respostas->fetch_assoc()){
+                                            $id_usuario_atual = $resposta['id_usuario'];
+                                            $resposta_atual = $resposta['resposta'];
+                                            
+
+                                              $sql2 = "SELECT * FROM usuario WHERE id = '$id_usuario_atual' "; /*colocar $id*/
+
+                                              if(($fundamental == null) and ($medio == null) and ($superior == null)){
+                                                $sql2 = "SELECT * FROM usuario where id = '$id_usuario_atual' ";
+                                              } 
+
+                                              else{
+                                                if($fundamental)
+                                                  $sql2 = "SELECT * FROM usuario WHERE id = '$id_usuario_atual' AND escolaridade = 'fundamental' ";
+
+                                                if($fundamental == null){
+                                                  if($medio)
+                                                  $sql2 = "SELECT * FROM usuario WHERE id = '$id_usuario_atual' AND escolaridade = 'medio' ";
+                                                }
+
+                                                else{
+                                                  if($medio)
+                                                  $sql2 = "SELECT * FROM usuario WHERE id = '$id_usuario_atual' AND (escolaridade = 'fundamental' OR escolaridade = 'medio') ";
+                                                }
+
+                                                if(($fundamental == null) and ($medio == null)){
+                                                  if($superior)
+                                                  $sql2 = "SELECT * FROM usuario WHERE id = '$id_usuario_atual' AND escolaridade = 'superior' ";
+                                                }
+
+                                                else{
+                                                  if((($fundamental != null) and ($medio != null)) AND ($superior) ){
+                                                    $sql2 = "SELECT * FROM usuario WHERE id = '$id_usuario_atual' AND (escolaridade = 'fundamental' OR escolaridade = 'medio' or escolaridade = 'superior')  ";
+                                                  }
+                                                  else if(($fundamental) and ($superior)){
+                                                    $sql2 = "SELECT * FROM usuario WHERE id = '$id_usuario_atual' AND (escolaridade = 'fundamental' OR escolaridade = 'superior') ";
+                                                  }
+                                                  else if(($medio) and ($superior))
+                                                    $sql2 = "SELECT * FROM usuario WHERE id = '$id_usuario_atual' AND (escolaridade = 'medio'OR escolaridade = 'superior') ";
+                                                }
+                                              }
+
+                                              $usuarios = $db->query($sql2);
+                                              while ($usuario= $usuarios->fetch_assoc()){
+                                                  $lat_atual = $usuario['lat'];
+                                                  $lng_atual = $usuario['lng'];
+
+                                                  $array[$cont]["lat"]= $lat_atual;
+                                                  $array[$cont]["lng"]= $lng_atual;
+                                                  $array[$cont]['resposta']= $resposta_atual;
+                                                  $cont++;
+                                              }$usuarios->free();
+                                          }
+                                          $respostas->free();
+                                          $verificaArray = isset($array);
+                                          if($verificaArray){
+                                            $dadosTratados = json_encode($array);
+                                          }
+                                          else{
+                                            echo "nenhum resultado encontrado";
+                                          }
+                                        
+                                  ?>
+
                           
                            </div><!--/.col-md-6-->
 
@@ -250,14 +361,42 @@
             //para ver os dados e testar se deu certo use o console.log:
             
             for (var key in dadosTratados) {
-                placeMarkerAndPanTo({lat: parseFloat(dadosTratados[key]['lat']), lng: parseFloat(dadosTratados[key]['lng'])}, map); 
+              if(dadosTratados[key]['resposta'] == "nao"){
+                  placeMarkerAndPanToNao({lat: parseFloat(dadosTratados[key]['lat']), lng: parseFloat(dadosTratados[key]['lng'])}, map); 
+              }
+              else if(dadosTratados[key]['resposta'] == "sim"){
+                  placeMarkerAndPanToSim({lat: parseFloat(dadosTratados[key]['lat']), lng: parseFloat(dadosTratados[key]['lng'])}, map); 
+              }else if(dadosTratados[key]['resposta'] == "naosei"){
+                  placeMarkerAndPanToNaoSei({lat: parseFloat(dadosTratados[key]['lat']), lng: parseFloat(dadosTratados[key]['lng'])}, map); 
+              }
             }
           }
 
-          function placeMarkerAndPanTo(latLng, map) {
+          function placeMarkerAndPanToNao(latLng, map) {
             var marker = new google.maps.Marker({
               position: latLng,
-              map: map
+              map: map,
+              icon: 'images/nao.png'
+            });
+            $("#latLng").val(latLng);
+            map.panTo(latLng);
+          }
+
+          function placeMarkerAndPanToSim(latLng, map) {
+            var marker = new google.maps.Marker({
+              position: latLng,
+              map: map,
+              icon: 'images/sim.png'
+            });
+            $("#latLng").val(latLng);
+            map.panTo(latLng);
+          }
+
+          function placeMarkerAndPanToNaoSei(latLng, map) {
+            var marker = new google.maps.Marker({
+              position: latLng,
+              map: map,
+              icon: 'images/naoSei.png'
             });
             $("#latLng").val(latLng);
             map.panTo(latLng);
