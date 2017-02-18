@@ -23,12 +23,15 @@
                              <!--<img class="logo_arena" src="images/icone-chat.png">-->
                          </div> <!-- /.logo -->
 
+                         <div class="form-group" align="right">
+                           <a href="adm/index.php"><spam class="glyphicon glyphicon-text-background"></spam></a>
+                         </div>
                          <div class="form-group log-status">
-                           <input type="email" class="form-control" placeholder="email" id="UserName" name="email" required>
+                           <input type="email" class="form-control" placeholder="Email" id="UserName" name="email" required>
                          </div>
 
                          <div class="form-group log-status">
-                           <input type="password" class="form-control" placeholder="senha" id="Passwod" name="senha" required>
+                           <input type="password" class="form-control" placeholder="Senha" id="Passwod" name="senha" required>
                          </div>
 
                          <div class="form-group log-status">

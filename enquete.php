@@ -90,21 +90,21 @@
 
                               		 	  	  <div class="form-group">
                               		 	  	  	  <div class="resposta">
-                                                 <label>sim<label>
+                                                 <label>Sim<label>
                                                  <input type="radio" name="resposta" value="sim"  required/>
                                               </div>
                               		 	  	  </div>
 
                                           <div class="form-group">
                                               <div class="resposta">
-                                                 <label>não<label>
+                                                 <label>Não<label>
                                                  <input type="radio" name="resposta" value="nao"  required/>
                                               </div>
                                           </div>
 
                                           <div class="form-group">
                                               <div class="resposta">
-                                                 <label>não sei<label>
+                                                 <label>Não sei<label>
                                                  <input type="radio" name="resposta" value="naosei"  required/>
                                               </div>
                                           </div>

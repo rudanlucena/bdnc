@@ -16,16 +16,16 @@
               		 	  <div class="login-form">
               		 	  	  <div class="form-group">
               		 	  	  	  <select name="sexo" class="form-control" requiride>
-              		 	  	  	  	     <option value="">sexo</option>
-              		 	  	  	  	     <option value="masculino">MASCULINO</option>
-              		 	  	  	  	     <option value="feminino">FEMININO</option>
-              		 	  	  	  	     <option value="outro">OUTRO</option>
+              		 	  	  	  	     <option value="">Sexo</option>
+              		 	  	  	  	     <option value="masculino">Masculino</option>
+              		 	  	  	  	     <option value="feminino">Feminino</option>
+              		 	  	  	  	     <option value="outro">Outros</option>
               		 	  	  	  </select>
               		 	  	  </div>
 
               		 	  	  <div class="form-group">
               		 	  	  	  <select name="idade" class="form-control" requiride>
-              		 	  	  	  	     <option value="">idade</option>
+              		 	  	  	  	     <option value="">Idade</option>
               		 	  	  	  	     <option value="15-20">15-20</option>
               		 	  	  	  	     <option value="20-25">20-25</option>
               		 	  	  	  	     <option value="25-30">25-30</option>
@@ -35,25 +35,21 @@
 
               		 	  	  <div class="form-group">
               		 	  	  	  <select name="renda" class="form-control" requiride>
-              		 	  	  	  	     <option value="">renda</option>
-              		 	  	  	  	     <option value="1sm">1 sm</option>
-              		 	  	  	  	     <option value="2sm">2 sm</option>
-              		 	  	  	  	     <option value="3sm">3 sm</option>
-              		 	  	  	  	     <option value=">3sm">>3 sm</option>
+              		 	  	  	  	     <option value="">Renda</option>
+              		 	  	  	  	     <option value="1sm">1 SM</option>
+              		 	  	  	  	     <option value="2sm">2 SM</option>
+              		 	  	  	  	     <option value="3sm">3 SM</option>
+              		 	  	  	  	     <option value=">3sm">>3 SM</option>
               		 	  	  	  </select>
               		 	  	  </div>
 
               		 	  	  <div class="form-group">
               		 	  	  	  <select name="escolaridade" class="form-control" requiride>
-              		 	  	  	  	     <option value="">escolaridade</option>
-              		 	  	  	  	     <option value="fundamental">fundamental</option>
-              		 	  	  	  	     <option value="medio">medio</option>
-              		 	  	  	  	     <option value="superior">superior</option>
+              		 	  	  	  	     <option value="">Escolaridade</option>
+              		 	  	  	  	     <option value="fundamental">Fundamental</option>
+              		 	  	  	  	     <option value="medio">Medio</option>
+              		 	  	  	  	     <option value="superior">Superior</option>
               		 	  	  	  </select>
-              		 	  	  </div>
-
-              		 	  	  <div class="form-group">
-              		 	  	  	 <button class="btn">localização</button>
               		 	  	  </div>
 
               		 	  	  <label>DADOS DE ACESSO</label>

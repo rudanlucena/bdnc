@@ -30,18 +30,19 @@
 
               		 <form action="insert_usuario.php" method="post">
               		 	  <div class="login-form">
+                      <label>DADOS</label>
               		 	  	  <div class="form-group">
               		 	  	  	  <select name="sexo" class="form-control" requiride>
-              		 	  	  	  	     <option value="">sexo</option>
-              		 	  	  	  	     <option value="m">MASCULINO</option>
-              		 	  	  	  	     <option value="f">FEMININO</option>
-              		 	  	  	  	     <option value="o">OUTRO</option>
+              		 	  	  	  	     <option value="">Sexo</option>
+              		 	  	  	  	     <option value="m">Masculino</option>
+              		 	  	  	  	     <option value="f">Feminino</option>
+              		 	  	  	  	     <option value="o">Outros</option>
               		 	  	  	  </select>
               		 	  	  </div>
 
               		 	  	  <div class="form-group">
               		 	  	  	  <select name="idade" class="form-control" requiride>
-              		 	  	  	  	     <option value="">idade</option>
+              		 	  	  	  	     <option value="">Idade</option>
               		 	  	  	  	     <option value="15-20">15-20</option>
               		 	  	  	  	     <option value="20-25">20-25</option>
               		 	  	  	  	     <option value="25-30">25-30</option>
@@ -51,32 +52,30 @@
 
               		 	  	  <div class="form-group">
               		 	  	  	  <select name="renda" class="form-control" requiride>
-              		 	  	  	  	     <option value="">renda</option>
-              		 	  	  	  	     <option value="1">1 sm</option>
-              		 	  	  	  	     <option value="2">2 sm</option>
-              		 	  	  	  	     <option value="3">3 sm</option>
-              		 	  	  	  	     <option value=">3">> 3 sm</option>
+              		 	  	  	  	     <option value="">Renda</option>
+              		 	  	  	  	     <option value="1">1 SM</option>
+              		 	  	  	  	     <option value="2">2 SM</option>
+              		 	  	  	  	     <option value="3">3 SM</option>
+              		 	  	  	  	     <option value=">3">> 3 SM</option>
               		 	  	  	  </select>
               		 	  	  </div>
 
               		 	  	  <div class="form-group">
               		 	  	  	  <select name="escolaridade" class="form-control" requiride>
-              		 	  	  	  	     <option value="">escolaridade</option>
-              		 	  	  	  	     <option value="fundamental">fundamental</option>
-              		 	  	  	  	     <option value="medio">medio</option>
-              		 	  	  	  	     <option value="superior">superior</option>
+              		 	  	  	  	     <option value="">Escolaridade</option>
+              		 	  	  	  	     <option value="fundamental">Fundamental</option>
+              		 	  	  	  	     <option value="medio">Medio</option>
+              		 	  	  	  	     <option value="superior">Superior</option>
               		 	  	  	  </select>
               		 	  	  </div>
 
-              		 	  	  <div class="form-group">
-              		 	  	  	 <input id="botaoLocalizacao" type="button" class="btn"  placeholder="localizacao" value="localização" required>
-              		 	  	  </div>
+                          <label>LOCALIZAÇÂO</label>
 
                           <div class="form-group log-status">
                             <input id="address" type="textbox" class="form-control" value="Cajazeiras, Brasil">
                           </div> 
                           <div>
-                            <input id="submit" type="button"  class="btn" value="Geocode">
+                            <input id="submit" type="button"  class="btn btn-default" value="Geocode">
                           </div>
                           <div id="map"></div>
 
@@ -91,11 +90,11 @@
               		 	  	  <label>DADOS DE ACESSO</label>
 
               		 	  	  <div class="form-group log-status">
-              		 	  	  	 <input type="email" placeholder="email" class="form-control" name="email" required> 
+              		 	  	  	 <input type="email" placeholder="Email" class="form-control" name="email" required> 
               		 	  	  </div>
 
               		 	  	  <div class="form-group log-status">
-              		 	  	  	  <input type="password" class="form-control" placeholder="senha" name="senha" required>
+              		 	  	  	  <input type="password" class="form-control" placeholder="Senha" name="senha" required>
               		 	  	  </div>
 
               		 	  	  <div class="form-group">
@@ -123,6 +122,9 @@
                  document.getElementById('lng').value =  event.latLng.lng()
              });
 
+            map.addListener('click', function(e) {
+              placeMarkerAndPanTo(e.latLng, map);
+            });
 
             var geocoder = new google.maps.Geocoder();
             document.getElementById('submit').addEventListener('click', function() {
@@ -152,10 +154,6 @@
             geocoder.geocode({'address': address}, function(results, status) {
               if (status === google.maps.GeocoderStatus.OK) {
                 resultsMap.setCenter(results[0].geometry.location);
-                var marker = new google.maps.Marker({
-                  map: resultsMap,
-                  position: results[0].geometry.location
-                });
               } else {
                 alert('Geocode was not successful for the following reason: ' + status);
               }
