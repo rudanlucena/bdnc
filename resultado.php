@@ -48,6 +48,10 @@
       .invisivel{
         display: none;
       }
+      .button_filtro{
+        text-align: center;
+        margin-top: 30px;
+      }
     </style>      
 
 </head>
@@ -207,7 +211,9 @@
                                </div><!--/.col-md-6-->
                                
                        </div><!--/.row-->
-                       <button type="submit" class="btn btn-success">Enviar</button>
+                       <div class="button_filtro">
+                          <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-search"></span>Filtrar</button>
+                       </div>
                        <div class="row mapa">
 
                            <div class="col-md-12 title">
