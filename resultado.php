@@ -211,7 +211,7 @@
                                </div><!--/.col-md-6-->
                                
                        </div><!--/.row-->
-                       <div class="button_filtro">
+                       <div class="button_filtro" align="center">
                           <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-search"></span>Filtrar</button>
                        </div>
                        <div class="row mapa">

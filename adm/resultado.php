@@ -25,7 +25,7 @@
           include("../conexao.php");
     ?>
     <meta charset="UTF-8">
-    <title>resultado</title>
+    <title>Resultado</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../bootstrap-3.7/css/bootstrap.css" rel="stylesheet" media="screen">
     <link href="../bootstrap/css/bootstrap.css" rel="stylesheet" media="screen"> 
@@ -129,9 +129,9 @@
 
                             <div class="col-md-12 col-sm-12">
                                  <div class="resultados">
-                                    <label>sim <?php echo $totalSim;?> % </label>
-                                    <label>não <?php echo $totalNao;?> %</label>
-                                    <label>não sei <?php echo $totalNaoSei;?> %</label>
+                                    <label>Sim: <?php echo $totalSim;?> % </label>
+                                    <label>Não: <?php echo $totalNao;?> %</label>
+                                    <label>Não sei: <?php echo $totalNaoSei;?> %</label>
                                  </div>
                             </div>
                        </div>
@@ -155,22 +155,22 @@
 
                               <div class="row">
                                   <div class="col-md-12">
-                                     <h4>respostas</h4>
+                                     <h4>Respostas</h4>
                                   </div>
                               </div>
 
                                   <div class="resposta">
-                                     <label>sim<label>
+                                     <label>Sim<label>
                                      <input type="checkbox" name="sim" <?php if($sim){?>checked<?php } ?> >
                                   </div>
 
                                   <div class="resposta">
-                                     <label>não<label>
+                                     <label>Não<label>
                                      <input type="checkbox" name="nao" <?php if($nao){?>checked<?php } ?> >
                                   </div>
 
                                   <div class="resposta">
-                                     <label>não sei<label>
+                                     <label>Não sei<label>
                                      <input type="checkbox" name="naoSei" <?php if($naoSei){?>checked<?php } ?> >
                                   </div>
                                </div><!--/.col-md-6-->
@@ -180,34 +180,29 @@
 
                                   <div class="row">
                                       <div class="col-md-12">
-                                         <h4>escolaridade</h4>
+                                         <h4>Escolaridade</h4>
                                       </div>
                                   </div>
 
                                   <div class="resposta">
-                                     <label>ensino fundamental<label>
+                                     <label>Ensino fundamental<label>
                                      <input type="checkbox" name="fundamental" <?php if($fundamental){?>checked<?php } ?>>
                                   </div>
 
                                   <div class="resposta">
-                                     <label>ensino medio<label>
+                                     <label>Ensino medio<label>
                                      <input type="checkbox" name="medio" <?php if($medio){?>checked<?php } ?> >
                                   </div>
 
                                   <div class="resposta">
-                                     <label>ensino superior<label>
+                                     <label>Ensino superior<label>
                                      <input type="checkbox" name="superior" <?php if($superior){?>checked<?php } ?>>
                                   </div>
-
-                                  <button type="submit">enviar</button>
                                </div><!--/.col-md-6-->
-
-                               
-                         
-
-
                        </div><!--/.row-->
-
+                       <div class="button_filtro" align="center">
+                          <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-search"></span>Filtrar</button>
+                       </div>
                        <div class="row mapa">
 
                            <div class="col-md-12 title">

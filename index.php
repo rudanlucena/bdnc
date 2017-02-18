@@ -22,10 +22,6 @@
                          <div class="templatemo_logo">        
                              <!--<img class="logo_arena" src="images/icone-chat.png">-->
                          </div> <!-- /.logo -->
-
-                         <div class="form-group" align="right">
-                           <a href="adm/index.php"><spam class="glyphicon glyphicon-text-background"></spam></a>
-                         </div>
                          <div class="form-group log-status">
                            <input type="email" class="form-control" placeholder="Email" id="UserName" name="email" required>
                          </div>
@@ -40,13 +36,10 @@
 
                          <div class="form-group ">
                            <a href="cadastro_usuario.php"><spam class="glyphicon glyphicon-plus"><spam class="glyphicon glyphicon-user"></spam></a>
+                           <a href="adm/index.php" align="right"><spam class="glyphicon glyphicon-text-background"></spam></a>
                          </div>
-                         
                      </div>
                   </form>
-
-                
-
              </div><!--/.col-md-12-->
            </div><!--/.row-->       
         </div><!--/.container-->
