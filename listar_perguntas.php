@@ -14,8 +14,8 @@
           }
 
           $logado = $_SESSION['login']; 
+          $id = $_SESSION['id_user'];
           include("conexao.php");
-          $id = $_GET['id'];
 
     ?>
 
@@ -47,11 +47,11 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-              <li><a href="listar_perguntas.php?id=<?=$id?>"><span class="glyphicon glyphicon-list"></span>Listar Perguntas</a></li>
+              <li><a href="listar_perguntas.php"><span class="glyphicon glyphicon-list"></span>Listar Perguntas</a></li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="encerrar_sessao.php?id=<?=$id?>"><span class="glyphicon glyphicon-log-out"></span>Sair</a></li>
+              <li><a href="encerrar_sessao.php"><span class="glyphicon glyphicon-log-out"></span>Sair</a></li>
             </ul>
            
           </div><!-- /.navbar-collapse -->
@@ -80,8 +80,6 @@
                                           if(mysqli_affected_rows($db) > 0){
                                             $votada = 1;
                                           }
-                                            
-
 
                               ?>    
                                        
@@ -93,8 +91,8 @@
                                                               <h5 class="member-name"><?php echo $pergunta['pergunta']; ?></h5>
                                                               
                                                               <ul class="member-social">
-                                                                  <?php if($votada==0){ ?><li><a href="enquete.php?id_user=<?=$id?>&id_pergunta=<?=$pergunta['id']?>"><span class="glyphicon glyphicon-pencil"></span></a></li><?php } ?>
-                                                                  <li><a href="verifica_voto.php?id_user=<?=$id?>&id_pergunta=<?=$id_pergunta_atual?>"><span class="glyphicon glyphicon-map-marker"></span></a></li>
+                                                                  <?php if($votada==0){ ?><li><a href="enquete.php?id_pergunta=<?=$pergunta['id']?>"><span class="glyphicon glyphicon-pencil"></span></a></li><?php } ?>
+                                                                  <li><a href="resultado.php?id_pergunta=<?=$id_pergunta_atual?>"><span class="glyphicon glyphicon-map-marker"></span></a></li>
                                                               </ul>
 
                                                             </div><!-- /.member-infos --> 

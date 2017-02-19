@@ -11,7 +11,7 @@
             }
 
             $logado = $_SESSION['login'];
-            $id_user = $_GET['id'];
+            $id_user = $_SESSION['id_user'];
       ?>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta charset="UTF-8">

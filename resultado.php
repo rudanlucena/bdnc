@@ -13,7 +13,7 @@
           $logado = $_SESSION['login'];
 
           /* dados passados pelo metodo get */
-          $id_user = $_GET['id_user'];
+          $id_user = $_SESSION['id_user'];
           $id_pergunta =$_GET['id_pergunta'];
 
           $sim = isset($_POST['sim']);
@@ -37,7 +37,7 @@
       <style>
         #map {
           width: 100%;
-          height: 300px;
+          height: 100%;
           margin-bottom: 20px;
           margin-top: 20px;
          
@@ -52,11 +52,24 @@
         text-align: center;
         margin-top: 30px;
       }
+      .login-form{
+        width: 100%;
+      }
+      .sucsses{
+        text-align: center;
+      }
+      .fail{
+        text-align: center;
+        color: red;
+      }
     </style>      
 
 </head>
 
-<body>
+<body><div class="alert alert-success">
+                                            <strong>Success!</strong> sessão encerrada com sucesso.
+                                            <a href="index.php"><button type="button" class="btn btn-primary">ok</button>
+                                    </div>
       <div class="bg-image"></div>
       <nav class="navbar navbar-inverse">
         <div class="container-fluid">
@@ -101,9 +114,9 @@
 
           $somaVotos = $totalSim['totalSim'] + $totalNao['totalNao'] + $totalNaoSei['totalNaoSei'];
          
-          $totalSim = (($totalSim['totalSim'] * 100) / $somaVotos);
-          $totalNao = (($totalNao['totalNao'] * 100) / $somaVotos);
-          $totalNaoSei = (($totalNaoSei['totalNaoSei'] * 100) / $somaVotos);
+          $totalSimPorcentagem = (($totalSim['totalSim'] * 100) / $somaVotos);
+          $totalNaoPorcentagem = (($totalNao['totalNao'] * 100) / $somaVotos);
+          $totalNaoSeiPorcentagem = (($totalNaoSei['totalNaoSei'] * 100) / $somaVotos);
 
           /*====================================================================== Nome da pergunta ======================================================*/
           $perguntas = $db->query("SELECT * from pergunta where id = '$id_pergunta'");
@@ -118,9 +131,16 @@
                 $voto = $resposta['resposta'];
             }
             $respostas->free();
-
-
                                         
+       ?>
+
+
+       <?php
+          $respostas_usuariosx = $db->query("SELECT * from respostas_usuarios WHERE id_usuario = '$id_user' AND id_pergunta = '$id_pergunta'");
+            if(mysqli_affected_rows($db) == 0){
+            Header("location:verifica_voto.php?id_pergunta=$id_pergunta"); 
+          }
+  
        ?>
 
        <div class="main-content">
@@ -132,88 +152,90 @@
                       <div class="login-form">
 
                        <div class="row resultado">
-                            <div class="col-md-12 title">
-                                 <h4><?php echo $enquete." (você: ".$voto.")";?></h4>
+                            <div class="col-md-6">
+                                   <div class="col-md-12 title">
+                                       <h3><?php echo $enquete." (você: ".$voto.")";?></h3>
+                                   </div>
+                                   <div class="resultados">
+                                      <label><span class="glyphicon"><img src="images/sim.png"></span>Sim: <?php echo $totalSim['totalSim']; echo " (".number_format($totalSimPorcentagem,1)."%)";?></label>
+                                      <label><span class="glyphicon"><img src="images/nao.png"></span>Não: <?php echo $totalNao['totalNao']; echo " (".number_format($totalNaoPorcentagem,1)."%)";?></label>
+                                      <label><span class="glyphicon"><img src="images/naoSei.png"></span>Não sei: <?php echo $totalNaoSei['totalNaoSei']; echo " (".number_format($totalNaoSeiPorcentagem,1)."%)";?></label>
+                                   </div>
                             </div>
-
-                            <div class="col-md-12 col-sm-12">
-                                 <div class="resultados">
-                                    <label>Sim: <?php echo $totalSim;?> % </label>
-                                    <label>Não: <?php echo $totalNao;?> %</label>
-                                    <label>Não sei: <?php echo $totalNaoSei;?> %</label>
-                                 </div>
-                            </div>
-                       </div>
+                       
 
                       
+                            <div class="col-md-6">
+                                <div class="col-md-12 title">
+                                   <h3>FILTROS</h3>
+                                </div>
 
-                       <div class="row filtros">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="invisivel">
+                                       <input type="text" name="id_user" value='<?=$id_user?>' >
+                                       <input type="text" name="id_pergunta" value='<?=$id_pergunta?>' >
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                           <h4>Respostas</h4>
+                                        </div>
+                                    </div>
+
+                                    <div class="resposta">
+                                       <label>Sim<label>
+                                       <input type="checkbox" name="sim" <?php if($sim){?>checked<?php } ?> >
+                                    </div>
+
+                                    <div class="resposta">
+                                       <label>Não<label>
+                                       <input type="checkbox" name="nao" <?php if($nao){?>checked<?php } ?> >
+                                    </div>
+
+                                    <div class="resposta">
+                                       <label>Não sei<label>
+                                       <input type="checkbox" name="naoSei" <?php if($naoSei){?>checked<?php } ?> >
+                                    </div>
+                                </div><!--/.col-md-6-->
+                            
 
 
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                           <h4>Escolaridade</h4>
+                                        </div>
+                                    </div>
 
-                           <div class="col-md-12 title">
-                               <h3>FILTROS</h3>
-                           </div>
+                                    <div class="resposta">
+                                       <label>Ensino fundamental<label>
+                                       <input type="checkbox" name="fundamental" <?php if($fundamental){?>checked<?php } ?>>
+                                    </div>
 
-                           <div class="invisivel">
-                               <input type="text" name="id_user" value='<?=$id_user?>' >
-                               <input type="text" name="id_pergunta" value='<?=$id_pergunta?>' >
-                           </div>
+                                    <div class="resposta">
+                                       <label>Ensino medio<label>
+                                       <input type="checkbox" name="medio" <?php if($medio){?>checked<?php } ?> >
+                                    </div>
 
+                                    <div class="resposta">
+                                       <label>Ensino superior<label>
+                                       <input type="checkbox" name="superior" <?php if($superior){?>checked<?php } ?>>
+                                    </div>                                   
+                                </div><!--/.col-md-6-->
 
-                           <div class="col-md-6 col-sm-6">
-
-                              <div class="row">
-                                  <div class="col-md-12">
-                                     <h4>Respostas</h4>
+                                
+                                <div class="col-md-12">
+                                  <div class="button_filtro">
+                                    <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-search"></span>Filtrar</button>
                                   </div>
+                                </div>
+                                 
+                                
                               </div>
-
-                                  <div class="resposta">
-                                     <label>Sim<label>
-                                     <input type="checkbox" name="sim" <?php if($sim){?>checked<?php } ?> >
-                                  </div>
-
-                                  <div class="resposta">
-                                     <label>Não<label>
-                                     <input type="checkbox" name="nao" <?php if($nao){?>checked<?php } ?> >
-                                  </div>
-
-                                  <div class="resposta">
-                                     <label>Não sei<label>
-                                     <input type="checkbox" name="naoSei" <?php if($naoSei){?>checked<?php } ?> >
-                                  </div>
-                               </div><!--/.col-md-6-->
-
-
-                               <div class="col-md-6 col-sm-6">
-
-                                  <div class="row">
-                                      <div class="col-md-12">
-                                         <h4>Escolaridade</h4>
-                                      </div>
-                                  </div>
-
-                                  <div class="resposta">
-                                     <label>Ensino fundamental<label>
-                                     <input type="checkbox" name="fundamental" <?php if($fundamental){?>checked<?php } ?>>
-                                  </div>
-
-                                  <div class="resposta">
-                                     <label>Ensino medio<label>
-                                     <input type="checkbox" name="medio" <?php if($medio){?>checked<?php } ?> >
-                                  </div>
-
-                                  <div class="resposta">
-                                     <label>Ensino superior<label>
-                                     <input type="checkbox" name="superior" <?php if($superior){?>checked<?php } ?>>
-                                  </div>
-                               </div><!--/.col-md-6-->
-                               
                        </div><!--/.row-->
-                       <div class="button_filtro" align="center">
-                          <button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-search"></span>Filtrar</button>
-                       </div>
+
+                       
+
                        <div class="row mapa">
 
                            <div class="col-md-12 title">
@@ -224,7 +246,7 @@
 
                                <div id="filtro"></div>
 
-                               <div id="map"></div>
+                               
 
                                <?php
 
@@ -327,12 +349,15 @@
                                           $verificaArray = isset($array);
                                           if($verificaArray){
                                             $dadosTratados = json_encode($array);
+                                            ?> <div class="sucsses"><p><span class="glyphicon glyphicon-search"></span><?php echo $cont." Resultados encontrados";?></p></div> <?php
                                           }
-                                          else{
-                                            echo "nenhum resultado encontrado";
+                                          else{ ?>
+                                            <div class="fail"><p><span class="glyphicon glyphicon-search"></span><?php echo "Nenhum resultado encontrado";?></p></div> <?php
                                           }
                                         
                                   ?>
+
+                                  <div id="map"></div>
 
                           
                            </div><!--/.col-md-6-->
@@ -353,7 +378,7 @@
     <script>
           function initMap() {
             var map = new google.maps.Map(document.getElementById('map'), {
-              zoom: 4,
+              zoom: 10,
              center:{lat: -6.889797, lng: -38.561197},
             });
 

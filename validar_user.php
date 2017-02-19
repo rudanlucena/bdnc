@@ -27,10 +27,13 @@
                                             if(mysqli_affected_rows($db) == 1){ 
                                                 $_SESSION['login'] = $login;
                                                 $_SESSION['senha'] = $senha;
+                                                $_SESSION['id_user'] = "";
+                                                $_SESSION['id_pergunta'] = "";
 
                                                 $identificador = $result->fetch_assoc();
                                                 $id = $identificador['id'];
-                                                Header("location:listar_perguntas.php?id=$id");                                                              
+                                                $_SESSION['id_user'] = $id;
+                                                Header("location:listar_perguntas.php");                                                              
                                             }
 
                                             else{
@@ -40,7 +43,9 @@
                                                         </div>';
 
                                                         unset ($_SESSION['login']);
-                                                        unset ($_SESSION['senha']);                             
+                                                        unset ($_SESSION['senha']);
+                                                        unset ($_SESSION['id_user']);
+                                                        unset ($_SESSION['id_pergunta']);                             
                                             }
                                         
                             mysqli_close($db);
