@@ -20,7 +20,7 @@
     ?>
 
     
-     <title>listar partidas</title>
+     <title>perguntas</title>
      <link href="bootstrap-3.7/css/bootstrap.css" rel="stylesheet" media="screen"> 
      <link href="bootstrap/css/bootstrap.css" rel="stylesheet" media="screen"> 
      <link href="css/templatemo_style.css" rel="stylesheet" media="screen"> 
@@ -71,9 +71,10 @@
                               <?php
                                 $perguntas = $db->query("SELECT * from pergunta order by id desc");
                                     if(mysqli_affected_rows($db) > 0){
-                                      $votada = 0;
+                                      
                                     
                                       while ($pergunta = $perguntas->fetch_assoc()){
+                                        $votada = 0;
                                         $id_pergunta_atual = $pergunta['id'];
 
                                         $respostas_usuariosx = $db->query("SELECT * from respostas_usuarios WHERE id_usuario = '$id' AND id_pergunta = '$id_pergunta_atual'");

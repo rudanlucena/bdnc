@@ -38,7 +38,7 @@
                            else{
                               echo '<div class="alert alert-success">
                                             <strong>Erro!</strong> a sessão não foi finalizado corretamente.
-                                            <a href="listar_perguntas.php?id=<?=$id_user?>><button type="button" class="btn btn-primary">ok</button>
+                                            <a href="listar_perguntas.php"><button type="button" class="btn btn-primary">ok</button>
                                     </div>';
                            }
                         ?> 

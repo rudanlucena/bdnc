@@ -7,6 +7,15 @@
     <link href="bootstrap-3.7/css/bootstrap.css" rel="stylesheet" media="screen">
     <link href="css/templatemo_style.css" rel="stylesheet" media="screen"> 
     <link rel="stylesheet" href="css/style.css">
+
+    <style>
+      .form-group a{
+        color: white;
+        margin-left: 10px;
+        text-decoration: underline;
+      }
+
+    </style>
 </head>
 
 <body>
@@ -18,6 +27,9 @@
   
                   <form action="validar_user.php" method="post">
                       <div class="login-form">
+                         <div class="link">
+                             <a href="adm/index.php" class="loginAdm"><spam class="glyphicon glyphicon-text-background"></spam></a>
+                         </div>
 
                          <div class="templatemo_logo">        
                              <!--<img class="logo_arena" src="images/icone-chat.png">-->
@@ -34,10 +46,11 @@
                            <button type="submit" class="log-btn" >LOGIN<span class="glyphicon glyphicon-chevron-right"></span></button>               
                          </div>
 
-                         <div class="form-group ">
-                           <a href="cadastro_usuario.php"><spam class="glyphicon glyphicon-plus"><spam class="glyphicon glyphicon-user"></spam></a>
-                           <a href="adm/index.php" align="right"><spam class="glyphicon glyphicon-text-background"></spam></a>
-                         </div>
+                         <div class="form-group">
+                            <div class="foolter">
+                             <a href="cadastro_usuario.php">criar conta.</a>
+                           </div>
+                       </div>
                      </div>
                   </form>
              </div><!--/.col-md-12-->

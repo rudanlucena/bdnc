@@ -66,10 +66,15 @@
 
 </head>
 
-<body><div class="alert alert-success">
-                                            <strong>Success!</strong> sessão encerrada com sucesso.
-                                            <a href="index.php"><button type="button" class="btn btn-primary">ok</button>
-                                    </div>
+<body>
+      <?php
+          $respostas_usuariosx = $db->query("SELECT * from respostas_usuarios WHERE id_usuario = '$id_user' AND id_pergunta = '$id_pergunta'");
+            if(mysqli_affected_rows($db) == 0){
+              echo "entrei";
+            Header("location:verifica_voto.php?id_pergunta=$id_pergunta"); 
+          }
+  
+      ?>
       <div class="bg-image"></div>
       <nav class="navbar navbar-inverse">
         <div class="container-fluid">
@@ -132,15 +137,6 @@
             }
             $respostas->free();
                                         
-       ?>
-
-
-       <?php
-          $respostas_usuariosx = $db->query("SELECT * from respostas_usuarios WHERE id_usuario = '$id_user' AND id_pergunta = '$id_pergunta'");
-            if(mysqli_affected_rows($db) == 0){
-            Header("location:verifica_voto.php?id_pergunta=$id_pergunta"); 
-          }
-  
        ?>
 
        <div class="main-content">
@@ -378,7 +374,7 @@
     <script>
           function initMap() {
             var map = new google.maps.Map(document.getElementById('map'), {
-              zoom: 10,
+              zoom: 8,
              center:{lat: -6.889797, lng: -38.561197},
             });
 
