@@ -80,12 +80,12 @@
                           </div>
                           <div id="map"></div>
 
-                          <div class="form-group log-status invisivel">
-                             <input type="text" placeholder="latitude" class="form-control" name="lat" id="lat" required> 
+                          <div class="form-group log-status ">
+                             <input type="text" placeholder="latitude" class="form-control invisivel" name="lat" id="lat" required> 
                           </div>
 
-                          <div class="form-group log-status invisivel">
-                             <input type="text" placeholder="longitude" class="form-control" name="lng" id="lng" required> 
+                          <div class="form-group log-status ">
+                             <input type="text" placeholder="longitude" class="form-control invisivel" name="lng" id="lng" required> 
                           </div>
 
               		 	  	  <label>DADOS DE ACESSO</label>
@@ -117,6 +117,31 @@
               center: {lat: -6.889797, lng: -38.561197}
             });
 
+            var infoWindow = new google.maps.InfoWindow({map: map});
+
+            // Try HTML5 geolocation.
+            if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(function(position) {
+                var pos = {
+                  lat: position.coords.latitude,
+                  lng: position.coords.longitude,
+                };
+
+                infoWindow.setPosition(pos);
+                infoWindow.setContent('Location found.');
+                map.setCenter(pos);
+
+                document.getElementById('lat').value = position.coords.latitude;
+                document.getElementById('lng').value =  position.coords.longitude;
+
+              }, function() {
+                handleLocationError(true, infoWindow, map.getCenter());
+              });
+            } else {
+              // Browser doesn't support Geolocation
+              handleLocationError(false, infoWindow, map.getCenter());
+            }
+
             google.maps.event.addListener(map,'click',function(event) {
                  document.getElementById('lat').value = event.latLng.lat()
                  document.getElementById('lng').value =  event.latLng.lng()
@@ -131,6 +156,15 @@
               geocodeAddress(geocoder, map);
             });
           }
+
+          function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+            infoWindow.setPosition(pos);
+            infoWindow.setContent(browserHasGeolocation ?
+                                  'Error: The Geolocation service failed.' :
+                                  'Error: Your browser doesn\'t support geolocation.');
+          }
+
+
 
           function placeMarkerAndPanTo(latLng, map) {
             if(marker != undefined && marker != ''){
@@ -159,6 +193,7 @@
               }
             });
           }
+
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6uep-fiBCnkiN69txzM-3UxT7rBfMnN8&callback=initMap"
         async defer>
