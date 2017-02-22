@@ -65,16 +65,16 @@
     </style>      
 
 </head>
-
 <body>
+      <!-- bloco que verifica se p usuario ja votol nessa enquete -->
       <?php
           $respostas_usuariosx = $db->query("SELECT * from respostas_usuarios WHERE id_usuario = '$id_user' AND id_pergunta = '$id_pergunta'");
             if(mysqli_affected_rows($db) == 0){
-              echo "entrei";
-            Header("location:verifica_voto.php?id_pergunta=$id_pergunta"); 
+              Header("location:verifica_voto.php?id_pergunta=$id_pergunta"); 
           }
   
       ?>
+
       <div class="bg-image"></div>
       <nav class="navbar navbar-inverse">
         <div class="container-fluid">
@@ -102,42 +102,10 @@
           </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
       </nav>
-       <!--<div class="bg-image"></div>-->
-
-       <?php
-          $result= $db->query("SELECT count(resposta) as totalSim from respostas_usuarios where resposta = 'sim' and id_pergunta = '$id_pergunta' ");
-          $totalSim = $result->fetch_assoc();
-          
-
-          $result= $db->query("SELECT count(resposta) as totalNao from respostas_usuarios where resposta = 'nao' and id_pergunta = '$id_pergunta' ");
-          $totalNao = $result->fetch_assoc();
-          
-
-          $result= $db->query("SELECT count(resposta) as totalNaoSei from respostas_usuarios where resposta = 'naoSei' and id_pergunta = '$id_pergunta' ");
-          $totalNaoSei = $result->fetch_assoc();
-          
-
-          $somaVotos = $totalSim['totalSim'] + $totalNao['totalNao'] + $totalNaoSei['totalNaoSei'];
-         
-          $totalSimPorcentagem = (($totalSim['totalSim'] * 100) / $somaVotos);
-          $totalNaoPorcentagem = (($totalNao['totalNao'] * 100) / $somaVotos);
-          $totalNaoSeiPorcentagem = (($totalNaoSei['totalNaoSei'] * 100) / $somaVotos);
-
-          /*====================================================================== Nome da pergunta ======================================================*/
-          $perguntas = $db->query("SELECT * from pergunta where id = '$id_pergunta'");
-            while ($pergunta = $perguntas->fetch_assoc()){
-                $enquete = $pergunta['pergunta'];
-            }
-            $perguntas->free();
-
-            /*====================================================================== Resposta Usuario ======================================================*/
-          $respostas = $db->query("SELECT * from respostas_usuarios where id_usuario = '$id_user' and id_pergunta = '$id_pergunta'");
-            while ($resposta= $respostas->fetch_assoc()){
-                $voto = $resposta['resposta'];
-            }
-            $respostas->free();
-                                        
-       ?>
+      
+      <?php
+        include("respostas_enquete.php"); 
+      ?>
 
        <div class="main-content">
           <div class="container">
@@ -195,7 +163,6 @@
                                 </div><!--/.col-md-6-->
                             
 
-
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <div class="row">
                                         <div class="col-md-12">
@@ -230,8 +197,7 @@
                               </div>
                        </div><!--/.row-->
 
-                       
-
+            
                        <div class="row mapa">
 
                            <div class="col-md-12 title">
@@ -240,132 +206,18 @@
 
                            <div class="col-md-12 col-sm-12">
 
-                               <div id="filtro"></div>
+                              <?php
+                                include("filtro.php");
+                              ?>
 
-                               
-
-                               <?php
-
-                                    /*------------------------ filtrando as respostas e pegando o id_usuario----------------------------*/
-                                    $sql = "SELECT * FROM respostas_usuarios WHERE id_pergunta = '$id_pergunta' "; /*colocar $id_pergunta*/
-
-                                    if(($sim == null) and ($nao == null) and ($naoSei == null)){
-                                      $sql = "SELECT * FROM respostas_usuarios where id_pergunta = '$id_pergunta' ";
-                                    } 
-
-                                    else{
-                                      if($sim)
-                                        $sql = "SELECT * FROM respostas_usuarios WHERE id_pergunta = '$id_pergunta' AND resposta = 'sim' ";
-
-                                      if($sim == null){
-                                        if($nao)
-                                        $sql = "SELECT * FROM respostas_usuarios WHERE id_pergunta = '$id_pergunta' AND resposta = 'nao' ";
-                                      }
-
-                                      else{
-                                        if($nao)
-                                        $sql = "SELECT * FROM respostas_usuarios WHERE id_pergunta = '$id_pergunta' AND (resposta = 'sim' OR resposta = 'nao') ";
-                                      }
-
-                                      if(($sim == null) and ($nao == null)){
-                                        if($naoSei)
-                                        $sql = "SELECT * FROM respostas_usuarios WHERE id_pergunta = '$id_pergunta' AND resposta = 'naoSei' ";
-                                      }
-
-                                      else{
-                                        if((($sim != null) and ($nao != null)) AND ($naoSei) ){
-                                          $sql = "SELECT * FROM respostas_usuarios WHERE id_pergunta = '$id_pergunta' AND (resposta = 'sim' OR resposta = 'nao' or resposta = 'naoSei')  ";
-                                        }
-                                        else if(($sim) and ($naoSei)){
-                                          $sql = "SELECT * FROM respostas_usuarios WHERE id_pergunta = '$id_pergunta' AND (resposta = 'sim' OR resposta = 'naoSei') ";
-                                        }
-                                        else if(($nao) and ($naoSei))
-                                          $sql = "SELECT * FROM respostas_usuarios WHERE id_pergunta = '$id_pergunta' AND (resposta = 'nao'OR resposta = 'naoSei') ";
-                                      }
-                                    }
-
-
-                                  /*----------------------------------------------------filtrando por resposta-----------------------------------*/
-                                        $cont = 0;
-                                        $respostas = $db->query($sql);
-                                        while ($resposta= $respostas->fetch_assoc()){
-                                            $id_usuario_atual = $resposta['id_usuario'];
-                                            $resposta_atual = $resposta['resposta'];
-                                            
-
-                                              $sql2 = "SELECT * FROM usuario WHERE id = '$id_usuario_atual' "; /*colocar $id*/
-
-                                              if(($fundamental == null) and ($medio == null) and ($superior == null)){
-                                                $sql2 = "SELECT * FROM usuario where id = '$id_usuario_atual' ";
-                                              } 
-
-                                              else{
-                                                if($fundamental)
-                                                  $sql2 = "SELECT * FROM usuario WHERE id = '$id_usuario_atual' AND escolaridade = 'fundamental' ";
-
-                                                if($fundamental == null){
-                                                  if($medio)
-                                                  $sql2 = "SELECT * FROM usuario WHERE id = '$id_usuario_atual' AND escolaridade = 'medio' ";
-                                                }
-
-                                                else{
-                                                  if($medio)
-                                                  $sql2 = "SELECT * FROM usuario WHERE id = '$id_usuario_atual' AND (escolaridade = 'fundamental' OR escolaridade = 'medio') ";
-                                                }
-
-                                                if(($fundamental == null) and ($medio == null)){
-                                                  if($superior)
-                                                  $sql2 = "SELECT * FROM usuario WHERE id = '$id_usuario_atual' AND escolaridade = 'superior' ";
-                                                }
-
-                                                else{
-                                                  if((($fundamental != null) and ($medio != null)) AND ($superior) ){
-                                                    $sql2 = "SELECT * FROM usuario WHERE id = '$id_usuario_atual' AND (escolaridade = 'fundamental' OR escolaridade = 'medio' or escolaridade = 'superior')  ";
-                                                  }
-                                                  else if(($fundamental) and ($superior)){
-                                                    $sql2 = "SELECT * FROM usuario WHERE id = '$id_usuario_atual' AND (escolaridade = 'fundamental' OR escolaridade = 'superior') ";
-                                                  }
-                                                  else if(($medio) and ($superior))
-                                                    $sql2 = "SELECT * FROM usuario WHERE id = '$id_usuario_atual' AND (escolaridade = 'medio'OR escolaridade = 'superior') ";
-                                                }
-                                              }
-
-                                              $usuarios = $db->query($sql2);
-                                              while ($usuario= $usuarios->fetch_assoc()){
-                                                  $lat_atual = $usuario['lat'];
-                                                  $lng_atual = $usuario['lng'];
-
-                                                  $array[$cont]["lat"]= $lat_atual;
-                                                  $array[$cont]["lng"]= $lng_atual;
-                                                  $array[$cont]['resposta']= $resposta_atual;
-                                                  $cont++;
-                                              }$usuarios->free();
-                                          }
-                                          $respostas->free();
-                                          $verificaArray = isset($array);
-                                          if($verificaArray){
-                                            $dadosTratados = json_encode($array);
-                                            ?> <div class="sucsses"><p><span class="glyphicon glyphicon-search"></span><?php echo $cont." Resultados encontrados";?></p></div> <?php
-                                          }
-                                          else{ ?>
-                                            <div class="fail"><p><span class="glyphicon glyphicon-search"></span><?php echo "Nenhum resultado encontrado";?></p></div> <?php
-                                          }
-                                        
-                                  ?>
-
-                                  <div id="map"></div>
-
-                          
+                              <div id="map"></div>
                            </div><!--/.col-md-6-->
 
                            <div id="idDiv"><?php echo $dadosTratados;?></div> 
 
                        </div><!--/.row-->
-
-                         
                      </div><!--/.login-form-->
                   </form>
-
              </div><!--/.col-md-12-->
            </div><!--/.row-->       
         </div><!--/.container-->
@@ -429,22 +281,9 @@
 
     </script>
 
-
-    <script>
-    $(document).ready(function(){
-
-
-
-    });
-
-</script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6uep-fiBCnkiN69txzM-3UxT7rBfMnN8&callback=initMap"
         async defer>
     </script>
-
-
-         
-         
-</body>
     
+</body>
 </html>

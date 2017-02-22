@@ -2,7 +2,6 @@
   <head>
     <meta charset="UTF-8">
     <title>LOGIN</title>
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="bootstrap-3.7/css/bootstrap.css" rel="stylesheet" media="screen">
     <link href="css/templatemo_style.css" rel="stylesheet" media="screen"> 
@@ -14,10 +13,9 @@
         margin-left: 10px;
         text-decoration: underline;
       }
-
     </style>
-</head>
 
+</head>
 <body>
        <div class="bg-image"></div>
        <div class="main-content">
@@ -58,7 +56,5 @@
         </div><!--/.container-->
     </div><!--/.main-content-->
          
-         
 </body>
-    
 </html>

@@ -18,7 +18,6 @@
           include("conexao.php");
 
     ?>
-
     
      <title>perguntas</title>
      <link href="bootstrap-3.7/css/bootstrap.css" rel="stylesheet" media="screen"> 
@@ -28,7 +27,6 @@
      <script src="js/jquery-1.10.2.min.js"></script>
        
 </head>
-
 <body>
 
       <nav class="navbar navbar-inverse">

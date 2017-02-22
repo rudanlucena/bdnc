@@ -5,7 +5,6 @@
     <link href="bootstrap-3.7/css/bootstrap.css" rel="stylesheet" media="screen">
     <link href="css/templatemo_style.css" rel="stylesheet" media="screen">
 </head>
-
 <body>
 
     <div class="bg-image"></div>

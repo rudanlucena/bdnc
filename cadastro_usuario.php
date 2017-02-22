@@ -7,6 +7,7 @@
       <link rel="stylesheet" href="css/style.css">
       <link rel="stylesheet" href="css/templatemo_style.css">
       <script src="js/jquery-1.10.2.min.js"></script>
+
       <style>
         #map {
           width: 100%;
@@ -18,8 +19,8 @@
       .invisivel{
         display: none;
        }
-
     </style>
+
 </head>      
 <body>
       <div class="bg-image"></div>
@@ -101,8 +102,7 @@
               		 	  	  	 <button class="log-btn">SALVAR</button>
               		 	  	  </div>
               		 	  </div>
-              		 </form>
-                                
+              		 </form>                    
 
               	</div><!--/.col-md-12-->
               </div><!--/.row-->	

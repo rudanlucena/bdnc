@@ -31,6 +31,7 @@
           display: none;
         }
       </style>
+
 </head>      
 <body>
 
@@ -122,6 +123,7 @@
                      $perguntas->free(); 
                   }                                  
               ?>
+              
               </div><!--/.row-->	
           </div><!--/.container-->
       </div><!--/.main-content--> 
