@@ -251,7 +251,6 @@
               map: map,
               icon: 'images/nao.png'
             });
-            $("#latLng").val(latLng);
             map.panTo(latLng);
           }
 
@@ -261,7 +260,6 @@
               map: map,
               icon: 'images/sim.png'
             });
-            $("#latLng").val(latLng);
             map.panTo(latLng);
           }
 
@@ -271,7 +269,6 @@
               map: map,
               icon: 'images/naoSei.png'
             });
-            $("#latLng").val(latLng);
             map.panTo(latLng);
           }
 

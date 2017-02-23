@@ -81,11 +81,11 @@
                           <div id="map"></div>
 
                           <div class="form-group log-status ">
-                             <input type="text" placeholder="latitude" class="form-control invisivel" name="lat" id="lat" required> 
+                             <input type="text" placeholder="latitude" class="form-control" name="lat" id="lat" required> 
                           </div>
 
                           <div class="form-group log-status ">
-                             <input type="text" placeholder="longitude" class="form-control invisivel" name="lng" id="lng" required> 
+                             <input type="text" placeholder="longitude" class="form-control" name="lng" id="lng" required> 
                           </div>
 
               		 	  	  <label>DADOS DE ACESSO</label>
@@ -117,7 +117,6 @@
               center: {lat: -6.889797, lng: -38.561197}
             });
 
-            var infoWindow = new google.maps.InfoWindow({map: map});
 
             // Try HTML5 geolocation.
             if (navigator.geolocation) {
@@ -126,13 +125,10 @@
                   lat: position.coords.latitude,
                   lng: position.coords.longitude,
                 };
-
-                infoWindow.setPosition(pos);
-                infoWindow.setContent('Location found.');
-                map.setCenter(pos);
-
-                document.getElementById('lat').value = position.coords.latitude;
-                document.getElementById('lng').value =  position.coords.longitude;
+                document.getElementById('lat').value = pos.lat;
+                document.getElementById('lng').value = pos.lng;
+                placeMarkerAndPanTo(pos, map);
+                            
 
               }, function() {
                 handleLocationError(true, infoWindow, map.getCenter());
@@ -143,11 +139,12 @@
             }
 
             google.maps.event.addListener(map,'click',function(event) {
-                 document.getElementById('lat').value = event.latLng.lat()
-                 document.getElementById('lng').value =  event.latLng.lng()
+                 
              });
 
             map.addListener('click', function(e) {
+              document.getElementById('lat').value = e.latLng.lat();
+              document.getElementById('lng').value =  e.latLng.lng();
               placeMarkerAndPanTo(e.latLng, map);
             });
 
@@ -175,7 +172,7 @@
               position: latLng,
               map: map
             });
-            map.panTo(latLng);
+            map.panTo(latLng);            
           }
 
 
