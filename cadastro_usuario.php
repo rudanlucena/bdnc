@@ -81,11 +81,11 @@
                           <div id="map"></div>
 
                           <div class="form-group log-status ">
-                             <input type="text" placeholder="latitude" class="form-control" name="lat" id="lat" required> 
+                             <input type="text" class="form-control invisivel" name="lat" id="lat" required> 
                           </div>
 
                           <div class="form-group log-status ">
-                             <input type="text" placeholder="longitude" class="form-control" name="lng" id="lng" required> 
+                             <input type="text"  class="form-control invisivel" name="lng" id="lng" required> 
                           </div>
 
               		 	  	  <label>DADOS DE ACESSO</label>
